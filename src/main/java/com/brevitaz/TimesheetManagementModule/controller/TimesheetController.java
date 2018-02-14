@@ -1,7 +1,6 @@
 package com.brevitaz.TimesheetManagementModule.controller;
 
 import com.brevitaz.TimesheetManagementModule.model.Timesheet;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +12,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/timesheet")
-public class TimesheetCo {
+public class TimesheetController {
+
+    @RequestMapping(method = RequestMethod.POST)
+    boolean fillTimesheet(@RequestBody Timesheet timesheet)
+    {
+        System.out.println("Timesheet is filled.");
+        return true;
+    }
+
 
     @RequestMapping(method = RequestMethod.GET)
     List viewTimesheets()
@@ -40,20 +47,12 @@ public class TimesheetCo {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST)
-    boolean fillTimesheet(@RequestBody Timesheet timesheet)
-    {
-        System.out.println("Timesheet is filled.");
-        return true;
-    }
+
 
     @RequestMapping(value = "/{employeeId}",method = RequestMethod.GET)
     List viewEmployeeTimesheet(@PathVariable String employeeId){
         return null;
     }
-
-
-
 
 
 }
