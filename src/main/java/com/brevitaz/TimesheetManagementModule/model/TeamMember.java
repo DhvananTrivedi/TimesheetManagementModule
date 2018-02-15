@@ -5,6 +5,10 @@ package com.brevitaz.TimesheetManagementModule.model;
  * @project TimesheetManagementModule
  **/
 public class TeamMember {
+    String id;
+    String name;
     Timesheet timesheet;
+
+
 
 }
