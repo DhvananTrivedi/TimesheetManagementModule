@@ -50,7 +50,7 @@ public class TimesheetDaoImpl implements TimesheetDao {
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(TimesheetDaoImpl.class);
 
 
-    // insert one timeshee into database with all the corresponding entries in a List
+    // insert one timesheet into database with all the corresponding entries in a List
     public boolean insert(Timesheet timesheet){
         // init
         IndexRequest request = new IndexRequest(
@@ -184,14 +184,6 @@ public class TimesheetDaoImpl implements TimesheetDao {
             return false;
         }
     }
-
-
-
-
-
-
-
-
 
 
 
