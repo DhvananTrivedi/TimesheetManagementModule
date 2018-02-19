@@ -1,6 +1,8 @@
 package com.brevitaz.TimesheetManagementModule.controller;
 
+import com.brevitaz.TimesheetManagementModule.dao.TimesheetDao;
 import com.brevitaz.TimesheetManagementModule.model.Timesheet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,44 +16,53 @@ import java.util.List;
 @RequestMapping("/timesheet")
 public class TimesheetController {
 
+    @Autowired
+    TimesheetDao timesheetDao;
+
     @RequestMapping(method = RequestMethod.POST)
     boolean fillTimesheet(@RequestBody Timesheet timesheet)
     {
+     //   boolean status = timesheetDao.insert(timesheet);
         System.out.println("Timesheet is filled.");
         return true;
     }
 
 
     @RequestMapping(method = RequestMethod.GET)
-    List viewTimesheets()
+    public List<Timesheet> viewTimesheets()
     {
+        List<Timesheet> timesheets = timesheetDao.getAll();
         System.out.println("All the timesheets will be listed");
-        return null;
+        return timesheets;
     }
 
     @RequestMapping(value = "/{timesheetId}",method = RequestMethod.PUT)
-    void updateTimesheet(@RequestBody Timesheet timesheet, @PathVariable String timesheetId)
+    boolean updateTimesheet(@RequestBody Timesheet timesheet, @PathVariable String id)
     {
-        System.out.println("Updating timesheet of id -"+timesheetId);
+        boolean status = timesheetDao.update(id,timesheet);
+        System.out.println("Updating timesheet of id -"+id);
+        return status;
     }
 
     @RequestMapping(value = "/{timesheetId}/assess" , method = RequestMethod.POST)
-    void asssesTimesheet(){
+    void assessTimesheet()
+    {
         System.out.println("Assessing timesheet!");
     }
 
     @RequestMapping(value = "/submit",method = RequestMethod.POST)
     boolean submit(@RequestBody Timesheet timesheet)
     {
-        return true;
+        boolean status = timesheetDao.insert(timesheet);
+        return status;
     }
 
 
-
-
     @RequestMapping(value = "/{employeeId}",method = RequestMethod.GET)
-    List viewEmployeeTimesheet(@PathVariable String employeeId){
-        return null;
+    public Timesheet byId(@PathVariable String employeeId)
+    {
+        Timesheet timesheet = timesheetDao.getById(employeeId);
+        return timesheet;
     }
 
 

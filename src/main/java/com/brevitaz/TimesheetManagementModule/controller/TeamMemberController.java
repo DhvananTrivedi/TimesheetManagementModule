@@ -1,8 +1,10 @@
 package com.brevitaz.TimesheetManagementModule.controller;
 
 
+import com.brevitaz.TimesheetManagementModule.dao.TeamMemberDao;
 import com.brevitaz.TimesheetManagementModule.model.TeamMember;
 import com.brevitaz.TimesheetManagementModule.model.Timesheet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,41 +13,52 @@ import java.util.List;
 @RequestMapping("/teamMember")
 public class TeamMemberController {
 
+
+    @Autowired
+    TeamMemberDao teamMemberDao;
+
     @RequestMapping(method = RequestMethod.POST)
-    public boolean add(@RequestBody TeamMember teamMember)
+    public boolean insert(@RequestBody TeamMember teamMember)
     {
+        boolean status = teamMemberDao.insert(teamMember);
         System.out.println("TeamMember is added");
-        return true;
+        return status;
     }
     @RequestMapping(method = RequestMethod.GET)
     public List<TeamMember> getAll()
     {
+        List<TeamMember> teamMembers = teamMemberDao.getAll();
         System.out.println("Displaying All teamMembers");
-        return null;
+        return teamMembers;
     }
+
     @RequestMapping(value="/byId",method = RequestMethod.GET)
     public TeamMember getById(@PathVariable String id)
     {
+        TeamMember teamMember = teamMemberDao.getById(id);
         System.out.println("TeamMember with id - "+id);
-        return null;
+        return teamMember;
     }
     @RequestMapping(value="/byName",method = RequestMethod.GET)
-    public TeamMember getByName(@PathVariable String name)
+    public List<TeamMember> getByName(@PathVariable String name)
     {
+        List<TeamMember> members = teamMemberDao.getByName(name);
         System.out.println("TeamMember with id - "+name);
-        return null;
+        return members;
     }
     @RequestMapping(method = RequestMethod.PUT)
-    public TeamMember update(@RequestBody TeamMember teamMember , @PathVariable String id)
+    public boolean update(@RequestBody TeamMember teamMember , @PathVariable String id)
     {
+        boolean status = teamMemberDao.update(id,teamMember);
         System.out.println("TeamMember is updated");
-        return null;
+        return status;
     }
     @RequestMapping(method = RequestMethod.DELETE)
     public boolean delete(@PathVariable String id)
     {
+        boolean status = teamMemberDao.delete(id);
         System.out.println("TeamMember is deleted");
-        return true;
+        return status;
     }
 
 }
