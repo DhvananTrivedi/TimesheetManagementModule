@@ -1,7 +1,7 @@
 package com.brevitaz.TimesheetManagementModule.dao.impl;
 
 import com.brevitaz.TimesheetManagementModule.dao.TimesheetEntryDao;
-import com.brevitaz.TimesheetManagementModule.model.TimeSheetEntry;
+import com.brevitaz.TimesheetManagementModule.model.TimesheetEntry;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.delete.DeleteRequest;
@@ -50,7 +50,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
 
 
     //Insert the one timesheet entry in the database
-    public boolean insert(TimeSheetEntry entry ){
+    public boolean insert(TimesheetEntry entry ){
         // init
         IndexRequest request = new IndexRequest(
                 environment.getProperty("request.entryIndex"),environment.getProperty("request.type"),entry.getId()
@@ -91,7 +91,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
 
     // get an entry object by its Id
     //@Override
-    public TimeSheetEntry getById(String id)
+    public TimesheetEntry getById(String id)
     {
         GetRequest request = new GetRequest(
                 environment.getProperty("request.entryIndex"),environment.getProperty("request.type"),id
@@ -99,7 +99,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
 
         try {
             GetResponse getResponse=client.get(request);
-            TimeSheetEntry entry  = mapper.readValue(getResponse.getSourceAsString(), TimeSheetEntry.class);
+            TimesheetEntry entry  = mapper.readValue(getResponse.getSourceAsString(), TimesheetEntry.class);
             return entry;
         } catch (IOException e) {
             e.printStackTrace();
@@ -109,10 +109,10 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
 
 
     // Lists all the entries in the Index
-    public List<TimeSheetEntry> getAll()
+    public List<TimesheetEntry> getAll()
     {
 
-        List<TimeSheetEntry> entries = new ArrayList<>();
+        List<TimesheetEntry> entries = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest( environment.getProperty("request.entryIndex"));
         searchRequest.types(environment.getProperty("request.type"));
 
@@ -120,9 +120,9 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
             SearchResponse searchResponse = client.search(searchRequest);
             SearchHit[] hits = searchResponse.getHits().getHits();
 
-            TimeSheetEntry entry;
+            TimesheetEntry entry;
             for (SearchHit hit : hits) {
-                entry = mapper.readValue(hit.getSourceAsString(), TimeSheetEntry.class);
+                entry = mapper.readValue(hit.getSourceAsString(), TimesheetEntry.class);
                 entries.add(entry);
             }
         } catch (IOException ioe) {
@@ -135,9 +135,9 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
 
 
     //get List of entries  by candidate's name
-    public List<TimeSheetEntry> getByName(String name){
+    public List<TimesheetEntry> getByName(String name){
         ///init
-        List<TimeSheetEntry> entries = new ArrayList<>();
+        List<TimesheetEntry> entries = new ArrayList<>();
         SearchRequest request = new SearchRequest(
                 environment.getProperty("request.entryIndex"));
         ///request.types(environment.getProperty("request.type"));
@@ -154,7 +154,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
             SearchResponse response = client.search(request);
             SearchHits hits = response.getHits();
             for (SearchHit hit : hits) {
-                TimeSheetEntry entry = mapper.readValue(hit.getSourceAsString(), TimeSheetEntry.class);
+                TimesheetEntry entry = mapper.readValue(hit.getSourceAsString(), TimesheetEntry.class);
                 System.out.println(entry);
                 entries.add(entry);
             }
@@ -168,7 +168,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
     }
 
     // Update an entry at the corresponding entryId
-    public boolean update(String id,TimeSheetEntry entry){
+    public boolean update(String id,TimesheetEntry entry){
 
         // init
         UpdateRequest request = new UpdateRequest(
@@ -187,8 +187,6 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
             return false;
         }
     }
-
-
 
 }
 

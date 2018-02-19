@@ -6,7 +6,7 @@ import java.sql.Date;
  * @author dhvanan on 14/2/18 Wednesday
  * @project TimesheetManagementModule
  **/
-public class TimeSheetEntry {
+public class TimesheetEntry {
 
     String id;
     Date date;
