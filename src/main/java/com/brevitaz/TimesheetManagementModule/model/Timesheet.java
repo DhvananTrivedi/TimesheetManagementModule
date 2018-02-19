@@ -27,4 +27,5 @@ public class Timesheet {
     public void setEntries(List<TimesheetEntry> entries) {
         this.entries = entries;
     }
+
 }

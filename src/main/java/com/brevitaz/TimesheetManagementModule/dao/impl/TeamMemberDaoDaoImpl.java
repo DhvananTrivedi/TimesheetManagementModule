@@ -25,6 +25,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ import java.util.List;
  * @author dhvanan on 15/2/18 Thursday
  * @project TimesheetManagementModule
  **/
+@Repository
 public class TeamMemberDaoDaoImpl implements TeamMemberDao {
 
     @Autowired
