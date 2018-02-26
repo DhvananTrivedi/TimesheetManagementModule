@@ -32,4 +32,13 @@ public class TeamMember {
     public void setTimesheet(Timesheet timesheet) {
         this.timesheet = timesheet;
     }
+
+    @Override
+    public String toString() {
+        return "TeamMember{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", timesheet=" + timesheet +
+                '}';
+    }
 }

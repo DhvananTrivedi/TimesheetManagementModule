@@ -24,6 +24,7 @@ public class TeamMemberController {
         System.out.println("TeamMember is added");
         return status;
     }
+
     @RequestMapping(method = RequestMethod.GET)
     public List<TeamMember> getAll()
     {
@@ -32,21 +33,23 @@ public class TeamMemberController {
         return teamMembers;
     }
 
-    @RequestMapping(value="/byId",method = RequestMethod.GET)
+    @RequestMapping(value="/byId/{id}",method = RequestMethod.GET)
     public TeamMember getById(@PathVariable String id)
     {
         TeamMember teamMember = teamMemberDao.getById(id);
         System.out.println("TeamMember with id - "+id);
         return teamMember;
     }
-    @RequestMapping(value="/byName",method = RequestMethod.GET)
+
+    @RequestMapping(value="/byName/{name}",method = RequestMethod.GET)
     public List<TeamMember> getByName(@PathVariable String name)
     {
         List<TeamMember> members = teamMemberDao.getByName(name);
-        System.out.println("TeamMember with id - "+name);
+        System.out.println("TeamMember with name - "+name);
         return members;
     }
-    @RequestMapping(method = RequestMethod.PUT)
+
+    @RequestMapping(value="update/{id}",method = RequestMethod.PUT)
     public boolean update(@RequestBody TeamMember teamMember , @PathVariable String id)
     {
         boolean status = teamMemberDao.update(id,teamMember);

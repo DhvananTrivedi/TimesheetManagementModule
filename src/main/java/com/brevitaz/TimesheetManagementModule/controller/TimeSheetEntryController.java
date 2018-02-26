@@ -34,7 +34,7 @@ public class TimeSheetEntryController {
         return controllers;
     }
 
-    @RequestMapping(value="/byId",method = RequestMethod.GET)
+    @RequestMapping(value="/byId/{id}",method = RequestMethod.GET)
     public TimesheetEntry getById(@PathVariable String id)
     {
         TimesheetEntry timesheetEntry = timesheetEntryDao.getById(id);
@@ -42,15 +42,15 @@ public class TimeSheetEntryController {
         return timesheetEntry;
     }
 
-    @RequestMapping(value="/byName",method = RequestMethod.GET)
-    public List<TimesheetEntry> getByName(@PathVariable String name)
+    @RequestMapping(value="/byName/{name}",method = RequestMethod.GET)
+    public List<TimesheetEntry> getByName(@PathVariable String teamMemberName)
     {
-        List<TimesheetEntry> entries = timesheetEntryDao.getByName(name);
-        System.out.println("TeamMember with id - "+name);
+        List<TimesheetEntry> entries = timesheetEntryDao.getByName(teamMemberName);
+        System.out.println("TeamMember with id - "+teamMemberName);
         return entries;
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(value="update/{id}",method = RequestMethod.PUT)
     public boolean update(@RequestBody TimesheetEntry timesheetEntry , @PathVariable String id)
     {
         boolean status = timesheetEntryDao.update(id,timesheetEntry);
@@ -58,7 +58,7 @@ public class TimeSheetEntryController {
         return status;
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
     public boolean delete(@PathVariable String id)
     {
         boolean status = timesheetEntryDao.delete(id);
