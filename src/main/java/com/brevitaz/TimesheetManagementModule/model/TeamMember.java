@@ -41,4 +41,17 @@ public class TeamMember {
                 ", timesheet=" + timesheet +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TeamMember that = (TeamMember) o;
+
+        if (!id.equals(that.id)) return false;
+        if (!name.equals(that.name)) return false;
+        return timesheet.equals(that.timesheet);
+    }
+
 }

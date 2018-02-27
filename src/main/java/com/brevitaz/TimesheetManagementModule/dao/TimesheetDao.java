@@ -18,7 +18,7 @@ public interface TimesheetDao {
     public List<Timesheet> getAll();
     public List<Timesheet> getByName(String name);
     public boolean update(String id,Timesheet timesheet);
-    public List<Timesheet> getByCandidateId(String id);
+    public List<Timesheet> getByMemberId(String id);
 
 
 

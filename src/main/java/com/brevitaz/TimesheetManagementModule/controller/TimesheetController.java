@@ -67,10 +67,10 @@ public class TimesheetController {
     }
 
 
-    @RequestMapping(value = "getByCandidateId/{candidateId}" , method = RequestMethod.GET)
+    @RequestMapping(value = "getByMemberId/{candidateId}" , method = RequestMethod.GET)
     public List<Timesheet> getByCandidateId(@PathVariable String id)
     {
-        List<Timesheet> timesheets = timesheetDao.getByCandidateId(id);
+        List<Timesheet> timesheets = timesheetDao.getByMemberId(id);
         return timesheets;
     }
 

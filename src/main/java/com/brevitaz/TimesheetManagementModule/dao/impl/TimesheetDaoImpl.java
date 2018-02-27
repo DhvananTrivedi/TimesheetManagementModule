@@ -190,8 +190,8 @@ public class TimesheetDaoImpl implements TimesheetDao {
 
 
     // get list of timesheet by using candidate id
-
-    public List<Timesheet> getByCandidateId(String id){
+    @Override
+    public List<Timesheet> getByMemberId(String id){
         ///init
         List<Timesheet> entries = new ArrayList<>();
         SearchRequest request = new SearchRequest(

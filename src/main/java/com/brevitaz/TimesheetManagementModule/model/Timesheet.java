@@ -28,4 +28,17 @@ public class Timesheet {
         this.entries = entries;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Timesheet timesheet = (Timesheet) o;
+
+        if (id != null ? !id.equals(timesheet.id) : timesheet.id != null) return false;
+        return entries != null ? entries.equals(timesheet.entries) : timesheet.entries == null;
+    }
+
+
 }
+

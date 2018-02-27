@@ -171,7 +171,7 @@ public class TeamMemberDaoImpl implements TeamMemberDao {
         //exec
         try {
 
-            System.out.println("HELLO");
+            System.out.println("UpdateDaoImpl");
             String json = mapper.writeValueAsString(teamMember);
             request.doc(json,XContentType.JSON);
             UpdateResponse response = client.update(request);

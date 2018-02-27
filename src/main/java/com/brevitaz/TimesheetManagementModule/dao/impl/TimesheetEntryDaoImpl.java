@@ -134,7 +134,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
 
 
 
-    //get List of entries  by candidate's name
+    //get List of entries  by team member's name
     public List<TimesheetEntry> getByName(String name){
         ///init
         List<TimesheetEntry> entries = new ArrayList<>();
@@ -142,7 +142,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
                 environment.getProperty("request.entryIndex"));
         ///request.types(environment.getProperty("request.type"));
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("teammember.name", name)
+        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("teamMember.name", name)
                 .fuzziness(Fuzziness.AUTO)
                 .prefixLength(3)
                 .maxExpansions(10);
