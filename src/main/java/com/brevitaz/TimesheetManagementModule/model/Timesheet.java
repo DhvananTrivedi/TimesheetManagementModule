@@ -8,8 +8,8 @@ import java.util.List;
  * @project TimesheetManagementModule
  **/
 public class Timesheet {
-    String id;
-    List<TimesheetEntry> entries = new ArrayList<TimesheetEntry>();
+    private String id;
+    private List<TimesheetEntry> entries = new ArrayList<TimesheetEntry>();
 
 
     public String getId() {

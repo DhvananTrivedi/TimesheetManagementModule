@@ -36,6 +36,8 @@ import java.util.List;
  * @author dhvanan on 6/2/18
  * @project TimesheetManagementModule
  **/
+
+
 @Repository
 public class TimesheetDaoImpl implements TimesheetDao {
 
@@ -133,12 +135,13 @@ public class TimesheetDaoImpl implements TimesheetDao {
     }
 
 
-    //get List of entries  by candidate's name
+    //get List of entries  by team-
+    // member's name
     public List<Timesheet> getByName(String name){
         ///init
         List<Timesheet> entries = new ArrayList<>();
         SearchRequest request = new SearchRequest(
-                environment.getProperty("request.teamsheetIndex"));
+                environment.getProperty("request.timesheetIndex"));
         ///request.types(environment.getProperty("request.type"));
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("teammember.name", name)
@@ -184,6 +187,42 @@ public class TimesheetDaoImpl implements TimesheetDao {
             return false;
         }
     }
+
+
+    // get list of timesheet by using candidate id
+
+    public List<Timesheet> getByCandidateId(String id){
+        ///init
+        List<Timesheet> entries = new ArrayList<>();
+        SearchRequest request = new SearchRequest(
+                environment.getProperty("request.timesheetIndex"));
+        ///request.types(environment.getProperty("request.type"));
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("teammember.id", id)
+                .fuzziness(Fuzziness.AUTO)
+                .prefixLength(3)
+                .maxExpansions(10);
+        //exec
+        try {
+            searchSourceBuilder.query(matchQueryBuilder);
+            request.source(searchSourceBuilder);
+            SearchResponse response = client.search(request);
+            SearchHits hits = response.getHits();
+            for (SearchHit hit : hits) {
+                Timesheet timesheet = mapper.readValue(hit.getSourceAsString(), Timesheet.class);
+                System.out.println(timesheet);
+                entries.add(timesheet);
+            }
+        }
+        catch(IOException ioE){
+            System.out.println(ioE);
+            return null;
+        }
+        return entries;
+    }
+
+
+
 
 
 

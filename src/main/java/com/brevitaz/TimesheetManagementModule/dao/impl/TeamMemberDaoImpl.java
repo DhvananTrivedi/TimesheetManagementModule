@@ -36,7 +36,7 @@ import java.util.List;
  * @project TimesheetManagementModule
  **/
 @Repository
-public class TeamMemberDaoDaoImpl implements TeamMemberDao {
+public class TeamMemberDaoImpl implements TeamMemberDao {
 
     @Autowired
     RestHighLevelClient client;
@@ -50,7 +50,7 @@ public class TeamMemberDaoDaoImpl implements TeamMemberDao {
 
 
     //Insert team member into ES
-    public boolean insert(TeamMember teamMember ){
+    public boolean insert(TeamMember teamMember){
         // init
         IndexRequest request = new IndexRequest(
                 environment.getProperty("request.teamMemberIndex"),environment.getProperty("request.type"),teamMember.getId()
@@ -165,12 +165,13 @@ public class TeamMemberDaoDaoImpl implements TeamMemberDao {
 
         // init
         UpdateRequest request = new UpdateRequest(
-                environment.getProperty("request.timeMemberIndex"),environment.getProperty("request.type"),id
-        );
+                environment.getProperty("request.teamMemberIndex"),environment.getProperty("request.type"),id);
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         //exec
         try {
+
+            System.out.println("HELLO");
             String json = mapper.writeValueAsString(teamMember);
             request.doc(json,XContentType.JSON);
             UpdateResponse response = client.update(request);
@@ -179,6 +180,7 @@ public class TeamMemberDaoDaoImpl implements TeamMemberDao {
             e.printStackTrace();
             return false;
         }
+
     }
 
 
