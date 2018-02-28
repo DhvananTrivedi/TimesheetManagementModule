@@ -53,7 +53,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
     public boolean insert(TimesheetEntry entry ){
         // init
         IndexRequest request = new IndexRequest(
-                environment.getProperty("request.entryIndex"),environment.getProperty("request.type"),entry.getId()
+                environment.getProperty("elasticsearch.index.entries"),environment.getProperty("request.type"),entry.getId()
         );
 
         //exec
@@ -75,7 +75,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
     {
         //init
         DeleteRequest deleteRequest = new DeleteRequest(
-                environment.getProperty("request.entryIndex"), environment.getProperty("request.type"), id);
+                environment.getProperty("elasticsearch.index.entries"), environment.getProperty("request.type"), id);
 
         try {
             DeleteResponse response = client.delete(deleteRequest);
@@ -94,7 +94,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
     public TimesheetEntry getById(String id)
     {
         GetRequest request = new GetRequest(
-                environment.getProperty("request.entryIndex"),environment.getProperty("request.type"),id
+                environment.getProperty("elasticsearch.index.entries"),environment.getProperty("request.type"),id
         );
 
         try {
@@ -113,7 +113,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
     {
 
         List<TimesheetEntry> entries = new ArrayList<>();
-        SearchRequest searchRequest = new SearchRequest( environment.getProperty("request.entryIndex"));
+        SearchRequest searchRequest = new SearchRequest( environment.getProperty("elasticsearch.index.entries"));
         searchRequest.types(environment.getProperty("request.type"));
 
         try {
@@ -139,7 +139,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
         ///init
         List<TimesheetEntry> entries = new ArrayList<>();
         SearchRequest request = new SearchRequest(
-                environment.getProperty("request.entryIndex"));
+                environment.getProperty("elasticsearch.index.entries"));
         ///request.types(environment.getProperty("request.type"));
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("teamMember.name", name)
@@ -172,7 +172,7 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
 
         // init
         UpdateRequest request = new UpdateRequest(
-                environment.getProperty("request.entryIndex"),environment.getProperty("request.type"),id
+                environment.getProperty("elasticsearch.index.entries"),environment.getProperty("request.type"),id
         );
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
