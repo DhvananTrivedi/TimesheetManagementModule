@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/teamMember")
+@RequestMapping("team-members")
 public class TeamMemberController {
 
 
@@ -33,7 +33,7 @@ public class TeamMemberController {
         return teamMembers;
     }
 
-    @RequestMapping(value="/byId/{id}",method = RequestMethod.GET)
+    @RequestMapping(value="/{id}",method = RequestMethod.GET)
     public TeamMember getById(@PathVariable String id)
     {
         TeamMember teamMember = teamMemberDao.getById(id);
@@ -41,13 +41,23 @@ public class TeamMemberController {
         return teamMember;
     }
 
-    @RequestMapping(value="/byName/{name}",method = RequestMethod.GET)
+    @RequestMapping(value = "/search",method = RequestMethod.POST)
+    public List<TeamMember> searchByName(@RequestBody String name){
+        List<TeamMember> teamMembers = teamMemberDao.getByName(name);
+        System.out.println("Search by name called");
+        return teamMembers;
+    }
+
+   /*
+   TODO - search method in place of this
+    @RequestMapping(value="/name/{name}",method = RequestMethod.GET)
     public List<TeamMember> getByName(@PathVariable String name)
     {
         List<TeamMember> members = teamMemberDao.getByName(name);
         System.out.println("TeamMember with name - "+name);
         return members;
     }
+    */
 
     @RequestMapping(value="update/{id}",method = RequestMethod.PUT)
     public boolean update(@RequestBody TeamMember teamMember , @PathVariable String id)
@@ -65,4 +75,5 @@ public class TeamMemberController {
     }
 
 }
+
 

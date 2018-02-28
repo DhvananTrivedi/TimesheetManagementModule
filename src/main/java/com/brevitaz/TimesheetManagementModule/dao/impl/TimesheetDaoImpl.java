@@ -57,7 +57,7 @@ public class TimesheetDaoImpl implements TimesheetDao {
         IndexRequest request = new IndexRequest(
                 environment.getProperty("elasticsearch.index.timesheets"),environment.getProperty("request.type"),timesheet.getId()
         );
-
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         // execution
         try {

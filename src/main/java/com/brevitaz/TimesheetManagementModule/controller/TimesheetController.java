@@ -1,6 +1,7 @@
 package com.brevitaz.TimesheetManagementModule.controller;
 
 import com.brevitaz.TimesheetManagementModule.dao.TimesheetDao;
+import com.brevitaz.TimesheetManagementModule.model.SearchData;
 import com.brevitaz.TimesheetManagementModule.model.Timesheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,11 +30,13 @@ public class TimesheetController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Timesheet> viewTimesheets()
+    public SearchData viewTimesheets()
     {
         List<Timesheet> timesheets = timesheetDao.getAll();
         System.out.println("All the timesheets will be listed");
-        return timesheets;
+        SearchData searchData = new SearchData();
+        searchData.setResponse( timesheets);
+        return searchData;
     }
 
     @RequestMapping(value = "/{timesheetId}",method = RequestMethod.PUT)
@@ -52,7 +55,7 @@ public class TimesheetController {
         return timesheet;
     }
 
-    @RequestMapping(value = "/{employeeName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/search/{employeeName}", method = RequestMethod.POST)
     public List<Timesheet> getByName(@PathVariable String employeeName)
     {
         List<Timesheet> timesheets = timesheetDao.getByName(employeeName);
@@ -84,9 +87,6 @@ public class TimesheetController {
         return status;
     }
 
-
-
-
 }
 
     /////////////////////////////////////////////////////////////
@@ -102,4 +102,3 @@ public class TimesheetController {
     }
 
 */
-

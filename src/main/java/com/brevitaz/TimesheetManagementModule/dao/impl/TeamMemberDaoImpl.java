@@ -55,6 +55,7 @@ public class TeamMemberDaoImpl implements TeamMemberDao {
         IndexRequest request = new IndexRequest(
                 environment.getProperty("elasticsearch.index.members"),environment.getProperty("request.type"),teamMember.getId()
         );
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         //exec
         try {
@@ -170,7 +171,6 @@ public class TeamMemberDaoImpl implements TeamMemberDao {
 
         //exec
         try {
-
             System.out.println("UpdateDaoImpl");
             String json = mapper.writeValueAsString(teamMember);
             request.doc(json,XContentType.JSON);
@@ -180,8 +180,5 @@ public class TeamMemberDaoImpl implements TeamMemberDao {
             e.printStackTrace();
             return false;
         }
-
     }
-
-
 }
