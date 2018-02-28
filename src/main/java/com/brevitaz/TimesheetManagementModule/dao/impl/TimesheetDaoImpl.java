@@ -41,21 +41,24 @@ import java.util.List;
 public class TimesheetDaoImpl implements TimesheetDao {
 
     @Autowired
-    RestHighLevelClient client;
+    private RestHighLevelClient client;
 
     @Autowired
-    Environment environment;
+    private Environment environment;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper mapper;
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(TimesheetDaoImpl.class);
+
+    private static final String TYPE = "doc";
 
 
     // insert one timesheet into database with all the corresponding entries in a List
     public boolean insert(Timesheet timesheet){
         // init
         IndexRequest request = new IndexRequest(
-                environment.getProperty("elasticsearch.index.timesheets"),environment.getProperty("request.type"),timesheet.getId()
+                environment.getProperty("elasticsearch.index.timesheets"),TYPE,timesheet.getId()
         );
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
@@ -79,7 +82,7 @@ public class TimesheetDaoImpl implements TimesheetDao {
 
             //init
             DeleteRequest deleteRequest = new DeleteRequest(
-                    environment.getProperty("elasticsearch.index.timesheets"), environment.getProperty("request.type"), id);
+                    environment.getProperty("elasticsearch.index.timesheets"),TYPE, id);
 
             try {
                 DeleteResponse response = client.delete(deleteRequest);
@@ -97,7 +100,7 @@ public class TimesheetDaoImpl implements TimesheetDao {
     public Timesheet getById(String id)
     {
         GetRequest request = new GetRequest(
-                environment.getProperty("elasticsearch.index.timesheets"),environment.getProperty("request.type"),id
+                environment.getProperty("elasticsearch.index.timesheets"),TYPE,id
         );
 
         try {
@@ -116,7 +119,7 @@ public class TimesheetDaoImpl implements TimesheetDao {
 
         List<Timesheet> timesheets = new ArrayList<>();
         SearchRequest searchRequest = new SearchRequest( environment.getProperty("elasticsearch.index.timesheets"));
-        searchRequest.types(environment.getProperty("request.type"));
+        searchRequest.types(TYPE);
 
         try {
             SearchResponse searchResponse = client.search(searchRequest);
@@ -141,7 +144,7 @@ public class TimesheetDaoImpl implements TimesheetDao {
         List<Timesheet> entries = new ArrayList<>();
         SearchRequest request = new SearchRequest(
                 environment.getProperty("elasticsearch.index.timesheets"));
-        ///request.types(environment.getProperty("request.type"));
+        ///request.types(TYPE);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("teammember.name", name)
                 .fuzziness(Fuzziness.AUTO)
@@ -171,7 +174,7 @@ public class TimesheetDaoImpl implements TimesheetDao {
 
         // init
         UpdateRequest request = new UpdateRequest(
-                environment.getProperty("elasticsearch.index.timesheets"),environment.getProperty("request.type"),id
+                environment.getProperty("elasticsearch.index.timesheets"),TYPE,id
         );
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
@@ -195,7 +198,7 @@ public class TimesheetDaoImpl implements TimesheetDao {
         List<Timesheet> entries = new ArrayList<>();
         SearchRequest request = new SearchRequest(
                 environment.getProperty("elasticsearch.index.timesheets"));
-        ///request.types(environment.getProperty("request.type"));
+        ///request.types(TYPE);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("teammember.id", id)
                 .fuzziness(Fuzziness.AUTO)

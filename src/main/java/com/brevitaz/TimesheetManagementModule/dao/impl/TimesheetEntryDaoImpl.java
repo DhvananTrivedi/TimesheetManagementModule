@@ -44,7 +44,8 @@ public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
     @Autowired
     Environment environment;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper mapper;
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(TimesheetEntryDaoImpl.class);
 
