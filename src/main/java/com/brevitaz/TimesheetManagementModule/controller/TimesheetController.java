@@ -14,7 +14,7 @@ import java.util.List;
  **/
 
 @RestController
-@RequestMapping("/timesheet")
+@RequestMapping("/timesheets")
 public class TimesheetController {
 
     @Autowired
@@ -55,8 +55,8 @@ public class TimesheetController {
         return timesheet;
     }
 
-    @RequestMapping(value = "/search/{employeeName}", method = RequestMethod.POST)
-    public List<Timesheet> getByName(@PathVariable String employeeName)
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public List<Timesheet> getByName(@RequestBody String employeeName)
     {
         List<Timesheet> timesheets = timesheetDao.getByName(employeeName);
         return timesheets;
@@ -70,10 +70,10 @@ public class TimesheetController {
     }
 
 
-    @RequestMapping(value = "getByMemberId/{candidateId}" , method = RequestMethod.GET)
-    public List<Timesheet> getByCandidateId(@PathVariable String id)
+    @RequestMapping(value = "getByMemberId/{memberId}" , method = RequestMethod.GET)
+    public List<Timesheet> getByCandidateId(@PathVariable String memberId)
     {
-        List<Timesheet> timesheets = timesheetDao.getByMemberId(id);
+        List<Timesheet> timesheets = timesheetDao.getByMemberId(memberId);
         return timesheets;
     }
 

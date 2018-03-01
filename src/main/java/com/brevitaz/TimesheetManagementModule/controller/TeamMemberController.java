@@ -59,14 +59,14 @@ public class TeamMemberController {
     }
     */
 
-    @RequestMapping(value="update/{id}",method = RequestMethod.PUT)
+    @RequestMapping(value="/{id}",method = RequestMethod.PUT)
     public boolean update(@RequestBody TeamMember teamMember , @PathVariable String id)
     {
         boolean status = teamMemberDao.update(id,teamMember);
         System.out.println("TeamMember is updated");
         return status;
     }
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     public boolean delete(@PathVariable String id)
     {
         boolean status = teamMemberDao.delete(id);

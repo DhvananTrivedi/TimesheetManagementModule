@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ import static org.hamcrest.CoreMatchers.hasItems;
 @SpringBootTest
 public class TeamMemberDaoImplTest {
 
-    Timesheet timesheet = new Timesheet();
+
 
     @Autowired
     TeamMemberDao teamMemberDao;
@@ -31,7 +32,6 @@ public class TeamMemberDaoImplTest {
         TeamMember teamMember = new TeamMember();
         teamMember.setId("141477");
         teamMember.setName("Hello");
-        teamMember.setTimesheet(timesheet);
 
         //insert & getByid
         boolean status = teamMemberDao.insert(teamMember);
@@ -39,10 +39,10 @@ public class TeamMemberDaoImplTest {
 
         //Assertion
         Assert.assertEquals(teamMember,newTeamMember);
+        Assert.assertEquals(true,status);
 
         teamMemberDao.delete("141477");
 
-        Assert.assertEquals(true,status);
     }
 
     @Test
@@ -51,17 +51,14 @@ public class TeamMemberDaoImplTest {
         TeamMember teamMember1 = new TeamMember();
         teamMember1.setId("1");
         teamMember1.setName("Member 1 ");
-        teamMember1.setTimesheet(timesheet);
         teamMemberDao.insert(teamMember1);
         TeamMember teamMember2 = new TeamMember();
         teamMember2.setId("2");
         teamMember2.setName("Member 2 ");
-        teamMember2.setTimesheet(timesheet);
         teamMemberDao.insert(teamMember2);
         TeamMember teamMember3 = new TeamMember();
         teamMember3.setId("3");
         teamMember3.setName("Member 3 ");
-        teamMember3.setTimesheet(timesheet);
         teamMemberDao.insert(teamMember3);
 
         List<TeamMember> teamMembers = teamMemberDao.getAll();
@@ -79,7 +76,6 @@ public class TeamMemberDaoImplTest {
         TeamMember teamMember = new TeamMember();
         teamMember.setId("6");
         teamMember.setName("Delete test dummy");
-        teamMember.setTimesheet(timesheet);
         teamMemberDao.insert(teamMember);
 
         boolean status = teamMemberDao.delete("6");
@@ -104,7 +100,6 @@ public class TeamMemberDaoImplTest {
         TeamMember expectedTeamMember = new TeamMember();
         expectedTeamMember.setId("5");
         expectedTeamMember.setName("Hello World of ES");
-        expectedTeamMember.setTimesheet(timesheet);
         teamMemberDao.insert(expectedTeamMember);
 
         TeamMember actualTeamMember = teamMemberDao.getById("5");
@@ -137,6 +132,8 @@ public class TeamMemberDaoImplTest {
         for (TeamMember tempTeamMember:teamMembers) {
             Assert.assertEquals(true,tempTeamMember.getName().contains("Dhvanan"));
         }
+        teamMemberDao.delete("141477");
+        teamMemberDao.delete("141478");
     }
 
     @Test
@@ -145,7 +142,6 @@ public class TeamMemberDaoImplTest {
         TeamMember teamMember = new TeamMember();
         teamMember.setId("123");
         teamMember.setName("Adhishree");
-        teamMember.setTimesheet(timesheet);
         teamMemberDao.insert(teamMember);
         TeamMember teamMember1 = new TeamMember();
         //teamMember1.setId("141477");
@@ -156,6 +152,7 @@ public class TeamMemberDaoImplTest {
         TeamMember actualTeamMember = teamMemberDao.getById("123");
         Assert.assertEquals(true,actualTeamMember.getName().equals("Adhishree Adeicha"));
         System.out.println(actualTeamMember);
+        teamMemberDao.delete("123");
 
     }
 }

@@ -12,6 +12,8 @@ public class Timesheet {
     private List<TimesheetEntry> entries = new ArrayList<TimesheetEntry>();
 
 
+
+
     public String getId() {
         return id;
     }
@@ -35,10 +37,16 @@ public class Timesheet {
 
         Timesheet timesheet = (Timesheet) o;
 
-        if (id != null ? !id.equals(timesheet.id) : timesheet.id != null) return false;
-        return entries != null ? entries.equals(timesheet.entries) : timesheet.entries == null;
+        if (getId() != null ? !getId().equals(timesheet.getId()) : timesheet.getId() != null) return false;
+        return getEntries() != null ? getEntries().equals(timesheet.getEntries()) : timesheet.getEntries() == null;
     }
 
-
+    @Override
+    public String toString() {
+        return "Timesheet{" +
+                "id='" + getId() + '\'' +
+                ", entries=" + getEntries() +
+                '}';
+    }
 }
 

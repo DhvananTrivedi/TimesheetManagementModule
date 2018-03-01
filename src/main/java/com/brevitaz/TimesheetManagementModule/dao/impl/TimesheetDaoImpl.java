@@ -1,5 +1,7 @@
 package com.brevitaz.TimesheetManagementModule.dao.impl;
 
+import com.brevitaz.TimesheetManagementModule.config.ClientConfig;
+import com.brevitaz.TimesheetManagementModule.config.ObjectMapperProvider;
 import com.brevitaz.TimesheetManagementModule.dao.TimesheetDao;
 import com.brevitaz.TimesheetManagementModule.model.Timesheet;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -41,13 +43,13 @@ import java.util.List;
 public class TimesheetDaoImpl implements TimesheetDao {
 
     @Autowired
-    private RestHighLevelClient client;
+    private ClientConfig client;
 
     @Autowired
     private Environment environment;
 
     @Autowired
-    private ObjectMapper mapper;
+    private ObjectMapperProvider mapper;
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(TimesheetDaoImpl.class);
 
@@ -60,14 +62,14 @@ public class TimesheetDaoImpl implements TimesheetDao {
         IndexRequest request = new IndexRequest(
                 environment.getProperty("elasticsearch.index.timesheets"),TYPE,timesheet.getId()
         );
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.getInstance().setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         // execution
         try {
 
-            String json = mapper.writeValueAsString(timesheet);
+            String json = mapper.getInstance().writeValueAsString(timesheet);
             request.source(json, XContentType.JSON);
-            IndexResponse response = client.index(request);
+            IndexResponse response = client.getClient().index(request);
             System.out.println(response.status());
             return ((response.status()+"").equals("CREATED")||(response.status()+"").equals("OK"));
 
@@ -85,7 +87,7 @@ public class TimesheetDaoImpl implements TimesheetDao {
                     environment.getProperty("elasticsearch.index.timesheets"),TYPE, id);
 
             try {
-                DeleteResponse response = client.delete(deleteRequest);
+                DeleteResponse response = client.getClient().delete(deleteRequest);
                 LOGGER.info("Delete response status -"+response.status());
                 return (response.status() + "").equals("OK");
 
@@ -104,8 +106,8 @@ public class TimesheetDaoImpl implements TimesheetDao {
         );
 
         try {
-            GetResponse getResponse=client.get(request);
-            Timesheet timesheet  = mapper.readValue(getResponse.getSourceAsString(), Timesheet.class);
+            GetResponse getResponse=client.getClient().get(request);
+            Timesheet timesheet  = mapper.getInstance().readValue(getResponse.getSourceAsString(), Timesheet.class);
             return timesheet;
         } catch (IOException e) {
             e.printStackTrace();
@@ -122,12 +124,12 @@ public class TimesheetDaoImpl implements TimesheetDao {
         searchRequest.types(TYPE);
 
         try {
-            SearchResponse searchResponse = client.search(searchRequest);
+            SearchResponse searchResponse = client.getClient().search(searchRequest);
             SearchHit[] hits = searchResponse.getHits().getHits();
 
             Timesheet timesheet;
             for (SearchHit hit : hits) {
-                timesheet = mapper.readValue(hit.getSourceAsString(), Timesheet.class);
+                timesheet = mapper.getInstance().readValue(hit.getSourceAsString(), Timesheet.class);
                 timesheets.add(timesheet);
             }
         } catch (IOException ioe) {
@@ -154,10 +156,10 @@ public class TimesheetDaoImpl implements TimesheetDao {
         try {
             searchSourceBuilder.query(matchQueryBuilder);
             request.source(searchSourceBuilder);
-            SearchResponse response = client.search(request);
+            SearchResponse response = client.getClient().search(request);
             SearchHits hits = response.getHits();
             for (SearchHit hit : hits) {
-                Timesheet teamsheet = mapper.readValue(hit.getSourceAsString(), Timesheet.class);
+                Timesheet teamsheet = mapper.getInstance().readValue(hit.getSourceAsString(), Timesheet.class);
                 System.out.println(teamsheet);
                 entries.add(teamsheet);
             }
@@ -176,13 +178,13 @@ public class TimesheetDaoImpl implements TimesheetDao {
         UpdateRequest request = new UpdateRequest(
                 environment.getProperty("elasticsearch.index.timesheets"),TYPE,id
         );
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.getInstance().setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         //exec
         try {
-            String json = mapper.writeValueAsString(timesheet);
+            String json = mapper.getInstance().writeValueAsString(timesheet);
             request.doc(json,XContentType.JSON);
-            UpdateResponse response = client.update(request);
+            UpdateResponse response = client.getClient().update(request);
             return (""+response.status()).equals("OK");
         } catch (IOException e) {
             e.printStackTrace();
@@ -208,10 +210,10 @@ public class TimesheetDaoImpl implements TimesheetDao {
         try {
             searchSourceBuilder.query(matchQueryBuilder);
             request.source(searchSourceBuilder);
-            SearchResponse response = client.search(request);
+            SearchResponse response = client.getClient().search(request);
             SearchHits hits = response.getHits();
             for (SearchHit hit : hits) {
-                Timesheet timesheet = mapper.readValue(hit.getSourceAsString(), Timesheet.class);
+                Timesheet timesheet = mapper.getInstance().readValue(hit.getSourceAsString(), Timesheet.class);
                 System.out.println(timesheet);
                 entries.add(timesheet);
             }

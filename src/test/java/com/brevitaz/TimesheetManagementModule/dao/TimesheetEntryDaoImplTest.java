@@ -38,6 +38,8 @@ public class TimesheetEntryDaoImplTest {
         TimesheetEntry actual = timesheetEntryDao.getById("222");
         Assert.assertEquals(true,status);
         Assert.assertEquals(expectedTimesheetEntry,actual);
+
+        timesheetEntryDao.delete("222");
     }
 
     @Test
@@ -67,11 +69,23 @@ public class TimesheetEntryDaoImplTest {
     @Test
     public void testUpdate()
     {
-        TimesheetEntry timesheetEntry = new TimesheetEntry();
-        timesheetEntry.setDuration("4hr");
-        boolean status = timesheetEntryDao.update("222",timesheetEntry);
-        System.out.println(status);
-        Assert.assertEquals(true,status);
+        // init
+        TimesheetEntry originalTimesheetEntry = new TimesheetEntry();
+        originalTimesheetEntry.setId("333");
+        originalTimesheetEntry.setDuration("3hr");
+        timesheetEntryDao.insert(originalTimesheetEntry);
+        System.out.println("Before-"+originalTimesheetEntry);
+        /// updated part
+        TimesheetEntry updatedTimesheetEntry = new TimesheetEntry();
+        updatedTimesheetEntry.setDuration("4hr");
+
+        //exec
+        timesheetEntryDao.update("333",updatedTimesheetEntry);
+        /// Assertion
+        TimesheetEntry actual = timesheetEntryDao.getById("333");
+        Assert.assertEquals(actual.getDuration(),updatedTimesheetEntry.getDuration());
+        System.out.println("After-"+actual);
+        timesheetEntryDao.delete("333");
     }
 
     @Test

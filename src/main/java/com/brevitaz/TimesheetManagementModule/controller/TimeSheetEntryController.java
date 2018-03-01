@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/timesheetEntry")
+@RequestMapping("/timesheet-entries")
 public class TimeSheetEntryController {
 
 
@@ -34,7 +34,7 @@ public class TimeSheetEntryController {
         return controllers;
     }
 
-    @RequestMapping(value="/byId/{id}",method = RequestMethod.GET)
+    @RequestMapping(value="/{id}",method = RequestMethod.GET)
     public TimesheetEntry getById(@PathVariable String id)
     {
         TimesheetEntry timesheetEntry = timesheetEntryDao.getById(id);
@@ -42,15 +42,15 @@ public class TimeSheetEntryController {
         return timesheetEntry;
     }
 
-    @RequestMapping(value="/byName/{name}",method = RequestMethod.GET)
-    public List<TimesheetEntry> getByName(@PathVariable String teamMemberName)
+    @RequestMapping(value="/search",method = RequestMethod.POST)
+    public List<TimesheetEntry> getByName(@RequestBody String teamMemberName)
     {
         List<TimesheetEntry> entries = timesheetEntryDao.getByName(teamMemberName);
         System.out.println("TeamMember with id - "+teamMemberName);
         return entries;
     }
 
-    @RequestMapping(value="update/{id}",method = RequestMethod.PUT)
+    @RequestMapping(value="/{id}",method = RequestMethod.PUT)
     public boolean update(@RequestBody TimesheetEntry timesheetEntry , @PathVariable String id)
     {
         boolean status = timesheetEntryDao.update(id,timesheetEntry);

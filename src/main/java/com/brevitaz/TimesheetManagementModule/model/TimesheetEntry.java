@@ -8,13 +8,16 @@ import java.sql.Date;
  **/
 public class TimesheetEntry {
 
-    String id;
-    Date date;
-    TeamMember teamMember;
-    String duration ;
-    String task;
-    String projectId;
-    String projectName;
+    private String id;
+    private Date date;
+    private TeamMember teamMember;
+    private String duration ;
+    private String task;
+    private String projectId;
+    private String projectName;
+
+
+
 
     public Date getDate() {
         return date;
@@ -79,20 +82,25 @@ public class TimesheetEntry {
 
         TimesheetEntry that = (TimesheetEntry) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
-        if (teamMember != null ? !teamMember.equals(that.teamMember) : that.teamMember != null) return false;
-        if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
-        if (task != null ? !task.equals(that.task) : that.task != null) return false;
-        if (projectId != null ? !projectId.equals(that.projectId) : that.projectId != null) return false;
-        return projectName != null ? projectName.equals(that.projectName) : that.projectName == null;
+        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
+        if (getDate() != null ? !getDate().equals(that.getDate()) : that.getDate() != null) return false;
+        if (getTeamMember() != null ? !getTeamMember().equals(that.getTeamMember()) : that.getTeamMember() != null) return false;
+        if (getDuration() != null ? !getDuration().equals(that.getDuration()) : that.getDuration() != null) return false;
+        if (getTask() != null ? !getTask().equals(that.getTask()) : that.getTask() != null) return false;
+        if (getProjectId() != null ? !getProjectId().equals(that.getProjectId()) : that.getProjectId() != null) return false;
+        return getProjectName() != null ? getProjectName().equals(that.getProjectName()) : that.getProjectName() == null;
     }
 
     @Override
     public String toString() {
         return "TimesheetEntry{" +
-                "id='" + id + '\'' +
-                ", teamMember=" + teamMember +
+                "id='" + getId() + '\'' +
+                ", date=" + getDate() +
+                ", teamMember=" + getTeamMember() +
+                ", duration='" + getDuration() + '\'' +
+                ", task='" + getTask() + '\'' +
+                ", projectId='" + getProjectId() + '\'' +
+                ", projectName='" + getProjectName() + '\'' +
                 '}';
     }
 }

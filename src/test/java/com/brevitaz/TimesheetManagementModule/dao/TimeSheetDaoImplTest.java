@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestComponent;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
@@ -97,7 +98,10 @@ public class TimeSheetDaoImplTest {
         //exec
         Timesheet timesheet = timesheetDao.getById("4455");
         System.out.println(timesheet);
+
+        //Assertion
         Assert.assertEquals(expectedTimesheet,timesheet);
+        timesheetDao.delete("4455");
 
     }
 
@@ -182,6 +186,43 @@ public class TimeSheetDaoImplTest {
         timesheetDao.delete("1");
         timesheetDao.delete("2");
         timesheetDao.delete("3");
+    }
+
+    @Test
+    public void testUpdate(){
+        //init
+        TimesheetEntry entry = new TimesheetEntry();
+        entry.setId("45");
+        entry.setDuration("5hr");
+
+        List<TimesheetEntry> timesheetEntries = new ArrayList<>();
+        timesheetEntries.add(entry);
+
+        Timesheet expectedTimesheet = new Timesheet();
+        expectedTimesheet.setId("4455");
+        expectedTimesheet.setEntries(timesheetEntries);
+        timesheetDao.insert(expectedTimesheet);
+        System.out.println("Before-"+expectedTimesheet);
+
+            ///     updated part
+        TimesheetEntry newEntry = new TimesheetEntry();
+        newEntry.setId("45");
+        newEntry.setDuration("6hr");
+        List<TimesheetEntry> newTimesheetEntries = new ArrayList<>();
+        newTimesheetEntries.add(newEntry);
+
+        Timesheet updatedTimesheet = new Timesheet();
+        updatedTimesheet.setEntries(newTimesheetEntries);
+
+
+        // exec
+        timesheetDao.update("4455",updatedTimesheet);
+
+        // Assertion
+        Timesheet actual = timesheetDao.getById("4455");
+        System.out.println("After-"+actual);
+        Assert.assertEquals(newEntry, actual.getEntries().get(0));
+        timesheetDao.delete("4455");
     }
 
 

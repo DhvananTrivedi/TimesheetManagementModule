@@ -1,13 +1,18 @@
 package com.brevitaz.TimesheetManagementModule.model;
 
+import java.util.List;
+
 /**
  * @author dhvanan on 8/2/18 Thursday
  * @project TimesheetManagementModule
  **/
 public class TeamMember {
-    String id;
-    String name;
-    Timesheet timesheet;
+    private String id;
+    private String name;
+    private List<Timesheet> timesheets;
+
+
+
 
     public String getId() {
         return id;
@@ -25,21 +30,12 @@ public class TeamMember {
         this.name = name;
     }
 
-    public Timesheet getTimesheet() {
-        return timesheet;
+    public List<Timesheet> getTimesheets() {
+        return timesheets;
     }
 
-    public void setTimesheet(Timesheet timesheet) {
-        this.timesheet = timesheet;
-    }
-
-    @Override
-    public String toString() {
-        return "TeamMember{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", timesheet=" + timesheet +
-                '}';
+    public void setTimesheets(List<Timesheet> timesheets) {
+        this.timesheets = timesheets;
     }
 
     @Override
@@ -49,9 +45,25 @@ public class TeamMember {
 
         TeamMember that = (TeamMember) o;
 
-        if (!id.equals(that.id)) return false;
-        if (!name.equals(that.name)) return false;
-        return timesheet.equals(that.timesheet);
+        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
+        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
+        return getTimesheets() != null ? getTimesheets().equals(that.getTimesheets()) : that.getTimesheets() == null;
     }
 
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getTimesheets() != null ? getTimesheets().hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TeamMember{" +
+                "id='" + getId() + '\'' +
+                ", name='" + getName() + '\'' +
+                ", timesheets=" + getTimesheets() +
+                '}';
+    }
 }
