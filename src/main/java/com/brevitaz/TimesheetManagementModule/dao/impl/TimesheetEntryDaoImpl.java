@@ -41,10 +41,10 @@ import java.util.List;
 public class TimesheetEntryDaoImpl implements TimesheetEntryDao{
 
     @Autowired
-    ClientConfig client;
+   private ClientConfig client;
 
     @Autowired
-    Environment environment;
+    private Environment environment;
 
     @Autowired
     private ObjectMapperProvider mapper;
