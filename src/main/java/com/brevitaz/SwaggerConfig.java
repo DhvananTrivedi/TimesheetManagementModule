@@ -1,4 +1,4 @@
-package com.brevitaz.TimesheetManagementModule;
+package com.brevitaz;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

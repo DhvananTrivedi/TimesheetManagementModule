@@ -1,4 +1,4 @@
-package com.brevitaz.TimesheetManagementModule.model;
+package com.brevitaz.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +10,6 @@ import java.util.List;
 public class Timesheet {
     private String id;
     private List<TimesheetEntry> entries = new ArrayList<TimesheetEntry>();
-
-
-
 
     public String getId() {
         return id;

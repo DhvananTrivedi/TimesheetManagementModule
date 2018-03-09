@@ -1,21 +1,16 @@
-package com.brevitaz.TimesheetManagementModule.dao;
+package com.brevitaz.dao;
 
-import com.brevitaz.TimesheetManagementModule.model.TeamMember;
-import com.brevitaz.TimesheetManagementModule.model.Timesheet;
+import com.brevitaz.model.TeamMember;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.hamcrest.CoreMatchers.hasItems;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class TeamMemberDaoImplTest {
