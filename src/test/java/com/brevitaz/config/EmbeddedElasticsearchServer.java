@@ -1,5 +1,5 @@
 /*
-package com.brevitaz.TimesheetManagementModule.config;
+package com.brevitaz.config;
 
 import org.apache.commons.io.FileUtils;
 import org.elasticsearch.client.Client;

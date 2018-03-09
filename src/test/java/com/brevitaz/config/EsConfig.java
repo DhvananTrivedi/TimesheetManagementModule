@@ -1,7 +1,6 @@
-package com.brevitaz.TimesheetManagementModule.config;
+package com.brevitaz.config;
 
 import org.junit.After;
-import org.junit.Before;
 import org.springframework.context.annotation.Configuration;
 import pl.allegro.tech.embeddedelasticsearch.EmbeddedElastic;
 import pl.allegro.tech.embeddedelasticsearch.IndexSettings;
