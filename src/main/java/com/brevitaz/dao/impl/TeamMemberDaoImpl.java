@@ -1,11 +1,10 @@
-package com.brevitaz.TimesheetManagementModule.dao.impl;
+package com.brevitaz.dao.impl;
 
-import com.brevitaz.TimesheetManagementModule.config.ClientConfig;
-import com.brevitaz.TimesheetManagementModule.config.ObjectMapperProvider;
-import com.brevitaz.TimesheetManagementModule.dao.TeamMemberDao;
-import com.brevitaz.TimesheetManagementModule.model.TeamMember;
+import com.brevitaz.config.ClientConfig;
+import com.brevitaz.config.ObjectMapperProvider;
+import com.brevitaz.dao.TeamMemberDao;
+import com.brevitaz.model.TeamMember;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -16,8 +15,6 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -42,28 +39,24 @@ import java.util.List;
 public class TeamMemberDaoImpl implements TeamMemberDao {
 
     @Autowired
-    ClientConfig client;
+    private ClientConfig client;
 
     @Autowired
-    Environment environment;
+    private Environment environment;
 
     @Autowired
     private ObjectMapperProvider mapper;
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(TimesheetEntryDaoImpl.class);
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(TeamMemberDaoImpl.class);
 
     private static final String TYPE = "doc";
 
-
-    //Insert team member into ES
     public boolean insert(TeamMember teamMember){
-        // init
+
         IndexRequest request = new IndexRequest(
-                environment.getProperty("elasticsearch.index.members"),TYPE,teamMember.getId()
-        );
+                environment.getProperty("elasticsearch.index.members"),TYPE,teamMember.getId());
         mapper.getInstance().setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-        //exec
         try {
 
             String json = mapper.getInstance().writeValueAsString(teamMember);

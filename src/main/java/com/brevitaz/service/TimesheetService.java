@@ -1,4 +1,4 @@
-package com.brevitaz.TimesheetManagementModule.service;
+package com.brevitaz.service;
 
 /**
  * @author dhvanan on 6/2/18

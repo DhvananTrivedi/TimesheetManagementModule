@@ -1,9 +1,8 @@
-package com.brevitaz.TimesheetManagementModule.controller;
+package com.brevitaz.controller;
 
 
-import com.brevitaz.TimesheetManagementModule.dao.TeamMemberDao;
-import com.brevitaz.TimesheetManagementModule.model.TeamMember;
-import com.brevitaz.TimesheetManagementModule.model.Timesheet;
+import com.brevitaz.dao.TeamMemberDao;
+import com.brevitaz.model.TeamMember;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +20,7 @@ public class TeamMemberController {
     public boolean insert(@RequestBody TeamMember teamMember)
     {
         boolean status = teamMemberDao.insert(teamMember);
-        System.out.println("TeamMember is added");
+        System.out.println("TeamMember is added successfully !!");
         return status;
     }
 
@@ -29,7 +28,7 @@ public class TeamMemberController {
     public List<TeamMember> getAll()
     {
         List<TeamMember> teamMembers = teamMemberDao.getAll();
-        System.out.println("Displaying All teamMembers");
+        System.out.println("Displaying All teamMembers !!");
         return teamMembers;
     }
 
@@ -44,7 +43,7 @@ public class TeamMemberController {
     @RequestMapping(value = "/search",method = RequestMethod.POST)
     public List<TeamMember> searchByName(@RequestBody String name){
         List<TeamMember> teamMembers = teamMemberDao.getByName(name);
-        System.out.println("Search by name called");
+        System.out.println("Search by name method is called !!");
         return teamMembers;
     }
 

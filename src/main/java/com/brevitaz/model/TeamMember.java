@@ -1,4 +1,4 @@
-package com.brevitaz.TimesheetManagementModule.model;
+package com.brevitaz.model;
 
 import java.util.List;
 
@@ -10,9 +10,6 @@ public class TeamMember {
     private String id;
     private String name;
     private List<Timesheet> timesheets;
-
-
-
 
     public String getId() {
         return id;

@@ -1,4 +1,4 @@
-package com.brevitaz.TimesheetManagementModule.config;
+package com.brevitaz.config;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;

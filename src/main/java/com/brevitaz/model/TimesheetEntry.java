@@ -1,4 +1,4 @@
-package com.brevitaz.TimesheetManagementModule.model;
+package com.brevitaz.model;
 
 import java.sql.Date;
 
@@ -10,13 +10,10 @@ public class TimesheetEntry {
 
     private String id;
     private Date date;
-    private TeamMember teamMember;
     private String duration ;
     private String task;
     private String projectId;
     private String projectName;
-
-
 
 
     public Date getDate() {
@@ -25,14 +22,6 @@ public class TimesheetEntry {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public TeamMember getTeamMember() {
-        return teamMember;
-    }
-
-    public void setTeamMember(TeamMember teamMember) {
-        this.teamMember = teamMember;
     }
 
     public String getDuration() {
@@ -84,7 +73,6 @@ public class TimesheetEntry {
 
         if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
         if (getDate() != null ? !getDate().equals(that.getDate()) : that.getDate() != null) return false;
-        if (getTeamMember() != null ? !getTeamMember().equals(that.getTeamMember()) : that.getTeamMember() != null) return false;
         if (getDuration() != null ? !getDuration().equals(that.getDuration()) : that.getDuration() != null) return false;
         if (getTask() != null ? !getTask().equals(that.getTask()) : that.getTask() != null) return false;
         if (getProjectId() != null ? !getProjectId().equals(that.getProjectId()) : that.getProjectId() != null) return false;
@@ -96,7 +84,6 @@ public class TimesheetEntry {
         return "TimesheetEntry{" +
                 "id='" + getId() + '\'' +
                 ", date=" + getDate() +
-                ", teamMember=" + getTeamMember() +
                 ", duration='" + getDuration() + '\'' +
                 ", task='" + getTask() + '\'' +
                 ", projectId='" + getProjectId() + '\'' +
