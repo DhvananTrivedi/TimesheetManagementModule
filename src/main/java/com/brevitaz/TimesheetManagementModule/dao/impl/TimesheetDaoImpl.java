@@ -224,10 +224,4 @@ public class TimesheetDaoImpl implements TimesheetDao {
         }
         return entries;
     }
-
-
-
-
-
-
 }

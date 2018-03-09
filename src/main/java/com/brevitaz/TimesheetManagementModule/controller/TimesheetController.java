@@ -22,7 +22,7 @@ public class TimesheetController {
 
 
     @RequestMapping(method = RequestMethod.POST)
-    boolean submit(@RequestBody Timesheet timesheet)
+    boolean add(@RequestBody Timesheet timesheet)
     {
         boolean status = timesheetDao.insert(timesheet);
         System.out.println("Submitted timesheet successfully !!");
@@ -30,7 +30,7 @@ public class TimesheetController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public SearchData viewTimesheets()
+    public SearchData getAll()
     {
         List<Timesheet> timesheets = timesheetDao.getAll();
         System.out.println("All the timesheets will be listed");
@@ -40,7 +40,7 @@ public class TimesheetController {
     }
 
     @RequestMapping(value = "/{timesheetId}",method = RequestMethod.PUT)
-    public boolean updateTimesheet(@RequestBody Timesheet timesheet, @PathVariable String id)
+    public boolean update(@RequestBody Timesheet timesheet, @PathVariable String id)
     {
         boolean status = timesheetDao.update(id,timesheet);
         System.out.println("Updating timesheet of id -"+id);
@@ -71,7 +71,7 @@ public class TimesheetController {
 
 
     @RequestMapping(value = "getByMemberId/{memberId}" , method = RequestMethod.GET)
-    public List<Timesheet> getByCandidateId(@PathVariable String memberId)
+    public List<Timesheet> getByTeamMemberId(@PathVariable String memberId)
     {
         List<Timesheet> timesheets = timesheetDao.getByMemberId(memberId);
         return timesheets;
